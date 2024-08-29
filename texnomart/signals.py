@@ -32,7 +32,7 @@ def category_post_save(sender, instance, created, **kwargs):
         subject = 'Hello from Texnomart!'
         message = f'Category {instance.title} has been created recently.'
         email_from = settings.EMAIL_HOST_USER
-        email_to = ['iqboljonummataliyev30@gmail.com']
+        email_to = ['jasurbekmavlonov24@gmail.com']
         try:
             send_mail(subject, message, email_from, email_to, fail_silently=False)
         except Exception as e:
