@@ -1,0 +1,12 @@
+{
+    "id": 3,
+    "name": "xiamo",
+    "description": "zor telefon ishlatib koring",
+    "price": 100,
+    "images": [
+        "/media/media/images.jfif"
+    ],
+    "category": "telefon",
+    "discount": 59,
+    "discounted_price": 41.0
+}
