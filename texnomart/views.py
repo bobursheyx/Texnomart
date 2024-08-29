@@ -31,6 +31,14 @@ class CategoryListAPI(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+    def get_queryset(self):
+        cache_key = 'category' + str(self.request.query_params)
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return cached_data
+        queryset = super().get_queryset()
+        cache.set(cache_key, queryset, timeout=60 * 15)
+        return queryset
 
 class CreateCategoryView(generics.CreateAPIView):
     queryset = Category.objects.all()
@@ -80,8 +88,6 @@ class DeleteCategoryView(generics.DestroyAPIView):
 class ProductListAPI(ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', ]
-    # permission_classes = [IsAuthenticated]
-    # authentication_classes = [TokenAuthentication]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
@@ -92,8 +98,6 @@ class ProductListAPI(ListAPIView):
 
 
 class ProductDetailView(RetrieveAPIView):
-    # permission_classes = [IsAuthenticated]
-    # authentication_classes = [TokenAuthentication]
     serializer_class = ProductModelSerializer
     queryset = Product.objects.all()
     lookup_field = 'id'
